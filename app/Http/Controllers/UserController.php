@@ -19,12 +19,12 @@ class UserController extends Controller
 
     public function showLogin()
     {
-        return view('backend.auth-login-social');
+        return view('backend.user.auth-login-social');
     }
 
     public function showRegister()
     {
-        return view('backend.auth-register-social');
+        return view('backend.user.auth-register-social');
     }
 
     public function checkLogin(LoginRequest $request)
@@ -49,7 +49,7 @@ class UserController extends Controller
         $user->fill($request->all());
         $user->password = Hash::make($request->password);
         $user->save();
-        Session::flash('success', 'Register Successfully.');
+        Session::flash('success', 'Registered Successfully.');
         return redirect()->route('admin.showLogin');
     }
 

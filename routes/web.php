@@ -29,7 +29,8 @@ Route::prefix('admin')->group(function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'checkLogin'], function () {
     Route::get('/', 'UserController@index')->name('admin.index1');
     Route::get('/post/list', 'UserController@index')->name('admin.index');
-
+    Route::get('/post/create', 'PostController@create')->name('admin.create');
+    Route::post('/post/create', 'PostController@store')->name('admin.store');
 
 
 });

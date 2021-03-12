@@ -1,5 +1,9 @@
 @extends('backend.master')
 
+@section('title')
+    Posts - Blog TEST
+@endsection
+
 @section('content')
 
     <main>

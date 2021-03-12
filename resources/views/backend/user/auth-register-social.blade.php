@@ -8,7 +8,7 @@
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
     <meta content name="description"/>
     <meta content name="author"/>
-    <title>Register - SB Admin Pro</title>
+    <title>Register - Blog TEST</title>
     <link href="{{ asset('backend/css/styles.css') }}" rel="stylesheet"/>
     <link href="{{ asset('backend/assets/img/favicon.png') }}" rel="icon" type="image/x-icon"/>
     <script crossorigin="anonymous" data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>

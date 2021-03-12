@@ -8,13 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content/>
     <meta name="author" content/>
-    <title>Dashboard - SB Admin Pro</title>
+    <title>
+        @yield('title')
+    </title>
     <link href="{{ asset("backend/css/styles.css") }}" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" crossorigin="anonymous"/>
     <link rel="icon" type="image/x-icon" href="{{ asset('backend/assets/img/favicon.png') }}"/>
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src='https://cdn.tiny.cloud/1/terbx94ttetdpm8otzdksmmprhv1qn3w2dvvzy4j0zwtc8n7/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 </head>
 <body class="nav-fixed">
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -22,7 +31,7 @@
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-    <a class="navbar-brand" href="{{ route('admin.index') }}">SB Admin Pro</a>
+    <a class="navbar-brand" href="{{ route('admin.index') }}">Blog TEST</a>
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle">
         <i data-feather="menu"></i></button>
@@ -257,6 +266,10 @@
 
 <script src="{{ asset('backend/js/sb-customizer.js') }}"></script>
 <sb-customizer project="sb-admin-pro"></sb-customizer>
+
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
+
 </body>
 
 <!-- Mirrored from sb-admin-pro.startbootstrap.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Mar 2021 08:49:11 GMT -->
