@@ -222,9 +222,9 @@
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="{{ asset('backend/assets/img/illustrations/profiles/profile-1.png') }}"/>
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name">Valerie Luna</div>
+                        <div class="dropdown-user-details-name">{{ \Illuminate\Support\Facades\Auth::user()->last_name . \Illuminate\Support\Facades\Auth::user()->first_name }}</div>
                         <div class="dropdown-user-details-email">
-                            <a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="03756f766d6243626c6f2d606c6e">[email&#160;protected]</a>
+                            {{ \Illuminate\Support\Facades\Auth::user()->email }}
                         </div>
                     </div>
                 </h6>
@@ -233,7 +233,7 @@
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Account
                 </a>
-                <a class="dropdown-item" href="#!">
+                <a class="dropdown-item" href="{{ route('admin.logout') }}">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Logout
                 </a>

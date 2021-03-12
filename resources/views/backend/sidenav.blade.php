@@ -19,24 +19,24 @@
                 <span class="badge badge-success-soft text-success ml-auto">2 New!</span>
             </a>
             <!-- Sidenav Menu Heading (Core)-->
-{{--            <div class="sidenav-menu-heading">Core</div>--}}
-            <!-- Sidenav Accordion (Dashboard)-->
-{{--            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">--}}
-{{--                <div class="nav-link-icon"><i data-feather="activity"></i></div>--}}
-{{--                Dashboards--}}
-{{--                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
-{{--            </a>--}}
-{{--            <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">--}}
-{{--                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">--}}
-{{--                    <a class="nav-link" href="{{ route('admin.index') }}">--}}
-{{--                        Default--}}
-{{--                        <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>--}}
-{{--                    </a>--}}
-{{--                    <a class="nav-link" href="dashboard-2.html">Multipurpose</a>--}}
-{{--                    <a class="nav-link" href="dashboard-3.html">Affiliate</a>--}}
-{{--                </nav>--}}
-{{--            </div>--}}
-            <!-- Sidenav Heading (App Views)-->
+        {{--            <div class="sidenav-menu-heading">Core</div>--}}
+        <!-- Sidenav Accordion (Dashboard)-->
+        {{--            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">--}}
+        {{--                <div class="nav-link-icon"><i data-feather="activity"></i></div>--}}
+        {{--                Dashboards--}}
+        {{--                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>--}}
+        {{--            </a>--}}
+        {{--            <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">--}}
+        {{--                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">--}}
+        {{--                    <a class="nav-link" href="{{ route('admin.index') }}">--}}
+        {{--                        Default--}}
+        {{--                        <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>--}}
+        {{--                    </a>--}}
+        {{--                    <a class="nav-link" href="dashboard-2.html">Multipurpose</a>--}}
+        {{--                    <a class="nav-link" href="dashboard-3.html">Affiliate</a>--}}
+        {{--                </nav>--}}
+        {{--            </div>--}}
+        <!-- Sidenav Heading (App Views)-->
             <div class="sidenav-menu-heading">App Views</div>
             <!-- Sidenav Accordion (Pages)-->
             <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -57,7 +57,12 @@
     <div class="sidenav-footer">
         <div class="sidenav-footer-content">
             <div class="sidenav-footer-subtitle">Logged in as:</div>
-            <div class="sidenav-footer-title">Valerie Luna</div>
+            <div class="sidenav-footer-title">
+                {{ \Illuminate\Support\Facades\Auth::user()->email }}
+            </div>
+            <div>
+                {{ \Illuminate\Support\Facades\Auth::user()->admin == 1 ? 'You are admin.' : '' }}
+            </div>
         </div>
     </div>
 </nav>

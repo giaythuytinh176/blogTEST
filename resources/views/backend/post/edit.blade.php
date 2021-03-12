@@ -1,7 +1,7 @@
 @extends('backend.master')
 
 @section('title')
-    Add New Post - Blog TEST
+    Edit Post - Blog TEST
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
                         <div class="col-auto mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Add New Post
+                                Edit Post
                             </h1>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
         <!-- Main page content-->
         <div class="container mt-n10">
             <!-- Example DataTable for Dashboard Demo-->
-            <form method="post" action="{{ route('admin.store') }}">
+            <form method="post" action="{{ route('admin.update', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
 
                 <div class="card mb-4">
                     <div class="card-header">
@@ -37,21 +37,37 @@
                             @csrf
                             <div class="form-group">
                                 <label>Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="Title" value="{{ old('title') }}">
+                                <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $post->title }}">
                                 @if($errors->any())
                                     <div class="alert-danger">{{ $errors->first('title') }}</div>
                                 @endif
                             </div>
                             <div class="form-group">
                                 <label>Summary</label>
-                                <input type="text" class="form-control" name="summary" placeholder="Summary" value="{{ old('summary') }}">
+                                <input type="text" class="form-control" name="summary" placeholder="Summary" value="{{ $post->summary }}">
                                 @if($errors->any())
                                     <div class="alert-danger">{{ $errors->first('summary') }}</div>
                                 @endif
                             </div>
+                            @can('page-user-admin')
+                                <div class="form-group">
+                                    <label>Published</label>
+                                    <select class="form-control" name="published">
+                                        <option value="1" {{ ($post->published == 1) ? "selected" : "" }}>
+                                            YES
+                                        </option>
+                                        <option value="0" {{ ($post->published == 0) ? "selected" : "" }}>
+                                            NO
+                                        </option>
+                                    </select>
+                                    @if($errors->any())
+                                        <div class="alert-danger">{{ $errors->first('published') }}</div>
+                                    @endif
+                                </div>
+                            @endcan
                             <div class="form-group">
                                 <label>Published at</label>
-                                <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ old('published_at') }}">
+                                <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ date('Y-m-d\TH:i', strtotime($post->published_at)) }}">
                                 @if($errors->any())
                                     <div class="alert-danger">{{ $errors->first('published_at') }}</div>
                                 @endif
@@ -59,11 +75,14 @@
                             <div class="form-group">
                                 <label>Content</label>
                                 <textarea id="mytextarea" name="content" cols="100%" rows="25">
-                                             {{ old('content') }}
+                                             {{ $post->content }}
                                 </textarea>
                                 @if($errors->any())
                                     <p class="alert-danger my-sm-4">{{ $errors->first('content') }}</p>
                                 @endif
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="user_id" value="{{ $post->user_id }}">
                             </div>
 
                         </div>
