@@ -2,42 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     public function index()
     {
-        //
+        return view('backend.main');
     }
 
-    public function create()
+    public function showLogin()
     {
-        //
+        return view('backend.auth-login-social');
     }
 
-    public function store(Request $request)
+    public function showRegister()
     {
-        //
+        return view('backend.auth-register-social');
     }
 
-    public function show($id)
+    public function checkLogin(LoginRequest $request)
     {
-        //
+        $auth = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+        $rememberme = $request->rememberme == 'on';
+        if (Auth::attempt($auth, $rememberme)) {
+            $request->session()->regenerate();
+            return redirect()->route('admin.index1');
+        } else {
+            Session::flash('error', 'Email or password is incorrect');
+            return redirect()->route('admin.showLogin');
+        }
     }
 
-    public function edit($id)
+    public function checkRegister(RegisterRequest $request)
     {
-        //
+        $user = new User();
+        $user->fill($request->all());
+        $user->password = Hash::make($request->password);
+        $user->save();
+        Session::flash('success', 'Register Successfully.');
+        return redirect()->route('admin.showLogin');
     }
 
-    public function update(Request $request, $id)
+    public function logout(Request $request)
     {
-        //
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        // return redirect()->route('showlogin.admin');
     }
 
-    public function destroy($id)
-    {
-        //
-    }
 }

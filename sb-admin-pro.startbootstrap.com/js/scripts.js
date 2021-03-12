@@ -3,7 +3,7 @@
     * Copyright 2013-2020 Start Bootstrap
     * Licensed under SEE_LICENSE (https://github.com/StartBootstrap/sb-admin-pro/blob/master/LICENSE)
     */
-    (function ($) {
+(function ($) {
     "use strict";
 
     // Enable Bootstrap tooltips via data-attributes globally

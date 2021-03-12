@@ -16,3 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('admin')->group(function () {
+    Route::get('/login', 'UserController@showLogin')->name('admin.showLogin');
+    Route::post('/login', 'UserController@checkLogin')->name('admin.checkLogin');
+    Route::get('/register', 'UserController@showRegister')->name('admin.showRegister');
+    Route::post('/register', 'UserController@checkRegister')->name('admin.checkRegister');
+
+
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => 'checkLogin'], function () {
+    Route::get('/', 'UserController@index')->name('admin.index1');
+    Route::get('/post/list', 'UserController@index')->name('admin.index');
+
+
+
+});
