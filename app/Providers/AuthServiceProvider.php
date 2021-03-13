@@ -35,7 +35,9 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('access-others-post', function ($user, $post) {
             if ($user->id == 1) return true;
-            return ($post->user_id == $user->id);
+            else {
+                return $post->user_id == $user->id;
+            }
         });
         // https://laravel.com/docs/8.x/authorization
         Gate::resource('user', UserPolicy::class);

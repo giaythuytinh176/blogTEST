@@ -13,7 +13,6 @@ class Post extends Model
         'title',
         'summary',
         'content',
-        'published_at',
     ];
 
     public function users()

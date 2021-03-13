@@ -51,27 +51,27 @@
                             </div>
                             @can('page-user-admin')
                                 <div class="form-group">
-                                    <label>Published</label>
-                                    <select class="form-control" name="published">
-                                        <option value="1" {{ ($post->published == 1) ? "selected" : "" }}>
+                                    <label>Is Published</label>
+                                    <select class="form-control" name="is_published">
+                                        <option value="1" {{ ($post->is_published == 1) ? "selected" : "" }}>
                                             YES
                                         </option>
-                                        <option value="0" {{ ($post->published == 0) ? "selected" : "" }}>
+                                        <option value="0" {{ ($post->is_published == 0) ? "selected" : "" }}>
                                             NO
                                         </option>
                                     </select>
                                     @if($errors->any())
-                                        <div class="alert-danger">{{ $errors->first('published') }}</div>
+                                        <div class="alert-danger">{{ $errors->first('is_published') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Published at</label>
+                                    <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ date('Y-m-d\TH:i', strtotime($post->published_at)) }}">
+                                    @if($errors->any())
+                                        <div class="alert-danger">{{ $errors->first('published_at') }}</div>
                                     @endif
                                 </div>
                             @endcan
-                            <div class="form-group">
-                                <label>Published at</label>
-                                <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ date('Y-m-d\TH:i', strtotime($post->published_at)) }}">
-                                @if($errors->any())
-                                    <div class="alert-danger">{{ $errors->first('published_at') }}</div>
-                                @endif
-                            </div>
                             <div class="form-group">
                                 <label>Content</label>
                                 <textarea id="mytextarea" name="content" cols="100%" rows="25">

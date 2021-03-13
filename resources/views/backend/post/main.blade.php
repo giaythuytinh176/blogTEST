@@ -42,8 +42,7 @@
                                 <th>Title</th>
                                 <th>Summary</th>
                                 <th>Author</th>
-                                <th>Published</th>
-                                <th>Published at</th>
+                                <th>Date</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -51,8 +50,7 @@
                                 <th>Title</th>
                                 <th>Summary</th>
                                 <th>Author</th>
-                                <th>Published</th>
-                                <th>Published at</th>
+                                <th>Date</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -70,16 +68,23 @@
                                     </td>
                                     <td>{{ substr($post->summary, 0, 33) }}...</td>
                                     <td>
-                                        @php
-                                            $user = \App\Models\User::findOrFail($post->user_id);
-                                            echo $user->email;
-                                        @endphp
+                                        {{ \App\Models\User::findOrFail($post->user_id)->email }}
                                     </td>
                                     <td>
-                                        {{ $post->published === 1 ? 'Yes' : 'No' }}
-                                    </td>
-                                    <td>
-                                        {{ $post->published_at }}
+                                        <div>
+                                            @php
+                                                if ($post->is_published == 1 && strtotime($post->published_at) < time()) {
+                                                    echo 'Published';
+                                                }
+                                                elseif (strtotime($post->published_at) > time()) {
+                                                   echo 'Scheduled';
+                                                }
+                                                else {
+                                                    echo 'Unpublished';
+                                                }
+                                            @endphp
+                                        </div>
+                                        <div>{{ $post->published_at }}</div>
                                     </td>
                                 </tr>
                             @empty

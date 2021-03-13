@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
-class CreateRequest extends FormRequest
+class EditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,6 +36,7 @@ class CreateRequest extends FormRequest
                 'title' => 'required|string|max:255',
                 'summary' => 'required|string',
                 'content' => 'required|string',
+                'user_id' => 'required|integer',
                 'published_at' => 'required|date',
                 'is_published' => 'required|integer',
             ];
@@ -44,6 +45,7 @@ class CreateRequest extends FormRequest
                 'title' => 'required|string|max:255',
                 'summary' => 'required|string',
                 'content' => 'required|string',
+                'user_id' => 'required|integer',
             ];
         }
     }

@@ -49,13 +49,29 @@
                                     <div class="alert-danger">{{ $errors->first('summary') }}</div>
                                 @endif
                             </div>
-                            <div class="form-group">
-                                <label>Published at</label>
-                                <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ old('published_at') }}">
-                                @if($errors->any())
-                                    <div class="alert-danger">{{ $errors->first('published_at') }}</div>
-                                @endif
-                            </div>
+                            @can('page-user-admin')
+                                <div class="form-group">
+                                    <label>Is Published</label>
+                                    <select class="form-control" name="is_published">
+                                        <option value="1">
+                                            YES
+                                        </option>
+                                        <option value="0">
+                                            NO
+                                        </option>
+                                    </select>
+                                    @if($errors->any())
+                                        <div class="alert-danger">{{ $errors->first('is_published') }}</div>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Published at</label>
+                                    <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ old('published_at') }}">
+                                    @if($errors->any())
+                                        <div class="alert-danger">{{ $errors->first('published_at') }}</div>
+                                    @endif
+                                </div>
+                            @endcan
                             <div class="form-group">
                                 <label>Content</label>
                                 <textarea id="mytextarea" name="content" cols="100%" rows="25">

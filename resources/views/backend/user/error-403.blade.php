@@ -24,7 +24,7 @@
                         <div class="text-center mt-4">
                             <img alt class="img-fluid p-4" src="{{ asset('backend/assets/img/illustrations/403-error-forbidden.svg') }}"/>
                             <p class="lead">Your client does not have permission to get this page from the server.</p>
-                            <a class="text-arrow-icon" href="index-2.html">
+                            <a class="text-arrow-icon" href="{{ route('admin.index1') }}">
                                 <i class="ml-0 mr-1" data-feather="arrow-left"></i>
                                 Return to Dashboard
                             </a>
