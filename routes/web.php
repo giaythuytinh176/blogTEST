@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'checkLogin'], function () {
         Route::get('list', 'PostController@index')->name('admin.index');
         Route::get('create', 'PostController@create')->name('admin.create');
         Route::post('create', 'PostController@store')->name('admin.store');
-        Route::get('{id}', 'PostController@destroy')->name('admin.destroy');
+        Route::get('delete/{id}', 'PostController@destroy')->name('admin.destroy');
         Route::get('edit/{id}/{slug}', 'PostController@edit')->name('admin.edit');
         Route::post('edit/{id}/{slug}', 'PostController@update')->name('admin.update');
     });

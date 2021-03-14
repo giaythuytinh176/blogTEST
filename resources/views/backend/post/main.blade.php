@@ -33,10 +33,10 @@
         <div class="container mt-n10">
             <!-- Example DataTable for Dashboard Demo-->
             <div class="card mb-4">
-                <div class="card-header">Personnel Management</div>
+                <div class="card-header">Private Blog TEST</div>
                 <div class="card-body">
-                    <div class="datatable">
-                        <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <div class="datatable"><!--  id="dataTable" -->
+                        <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>Title</th>
@@ -73,16 +73,17 @@
                                     <td>
                                         <div>
                                             @php
-                                                if ($post->is_published == 1 && strtotime($post->published_at) < time()) {
-                                                    echo 'Published';
-                                                }
-                                                elseif (strtotime($post->published_at) > time()) {
+                                                if (strtotime($post->published_at) > time()) {
                                                    echo 'Scheduled';
+                                                }
+                                                elseif (strtotime($post->published_at) < time()) {
+                                                    echo 'Published';
                                                 }
                                                 else {
                                                     echo 'Unpublished';
                                                 }
                                             @endphp
+                                            | {{ $post->status == 'show' ? 'Show' : 'Hide' }}
                                         </div>
                                         <div>{{ $post->published_at }}</div>
                                     </td>
@@ -96,6 +97,7 @@
                             @endforelse
                             </tbody>
                         </table>
+                        <div style="float: right;">{{ $posts->links( "pagination::bootstrap-4") }}</div>
                     </div>
                 </div>
             </div>

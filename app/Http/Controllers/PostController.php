@@ -18,20 +18,34 @@ class PostController extends Controller
     {
         $posts = DB::table('posts')
             ->where('published_at', '<=', now())
-//            ->where('is_published', '=', '0')
+            ->where('is_published', false)
             ->orderByDesc('published_at')
             ->get();
         $posts->each(function ($post) {
-            DB::table('posts')->where('id', $post->id)->update(['is_published' => '1']);
+            DB::table('posts')->where('id', $post->id)->update(['is_published' => true]);
+        });
+
+        $posts2 = DB::table('posts')
+            ->where('published_at', '>', now())
+            ->where('is_published', true)
+            ->orderByDesc('published_at')
+            ->get();
+        $posts2->each(function ($post2) {
+            DB::table('posts')->where('id', $post2->id)->update(['is_published' => false]);
         });
     }
 
     public function index()
     {
         if ($this->userCan('page-user-admin')) {
-            $posts = DB::table('posts')->orderByDesc('id')->get();
+            $posts = DB::table('posts')
+                ->orderByDesc('id')
+                ->paginate(10);
         } else {
-            $posts = DB::table('posts')->where('user_id', Auth::user()->id)->orderByDesc('id')->get();
+            $posts = DB::table('posts')
+                ->where('user_id', Auth::user()->id)
+                ->orderByDesc('id')
+                ->paginate(10);
         }
         return view('backend.post.main', compact('posts'));
     }
@@ -48,10 +62,11 @@ class PostController extends Controller
         $post->slug = Str::slug($post->title, "-");
         $post->user_id = Auth::user()->id;
         if (!$this->userCan('page-user-admin')) {
-            $post->published_at = Carbon::now()->toDateTimeString();
+            $post->published_at = now();
+            $post->status = 'hide';
         } else {
             $post->published_at = $request->published_at;
-            $post->is_published = $request->is_published;
+            $post->status = $request->status;
         }
         $post->save();
         Toastr::success('Post published.');
@@ -77,11 +92,11 @@ class PostController extends Controller
         $post->slug = Str::slug($post->title, "-");
         $post->user_id = $request->user_id;
         if ($this->userCan('page-user-admin')) {
-            $post->is_published = ($request->is_published == 1) ? '1' : '0';
+            $post->status = $request->status;
             $post->published_at = $request->published_at;
         }
         $post->save();
-        Toastr::success('Updated successfully.');
+        Toastr::success('Post Updated.');
         return redirect()->route('admin.index');
     }
 

@@ -18,12 +18,6 @@ class CreateRequest extends FormRequest
         return true;
     }
 
-    public function userCan($action, $option = NULL)
-    {
-        $user = Auth::user();
-        return Gate::forUser($user)->allows($action, $option);
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -37,7 +31,7 @@ class CreateRequest extends FormRequest
                 'summary' => 'required|string',
                 'content' => 'required|string',
                 'published_at' => 'required|date',
-                'is_published' => 'required|integer',
+                'status' => 'required|string|max:33',
             ];
         } else {
             return [
@@ -46,5 +40,11 @@ class CreateRequest extends FormRequest
                 'content' => 'required|string',
             ];
         }
+    }
+
+    public function userCan($action, $option = NULL)
+    {
+        $user = Auth::user();
+        return Gate::forUser($user)->allows($action, $option);
     }
 }

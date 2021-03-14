@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::define('page-user-admin', function ($user) {
-            return $user->admin == 1;
+            return $user->role == 1;
         });
         Gate::define('access-others-post', function ($user, $post) {
             if ($user->id == 1) return true;

@@ -61,7 +61,7 @@
                 {{ \Illuminate\Support\Facades\Auth::user()->email }}
             </div>
             <div>
-                {{ \Illuminate\Support\Facades\Auth::user()->admin == 1 ? 'You are admin.' : '' }}
+                {{ \Illuminate\Support\Facades\Auth::user()->role == 1 ? 'You are admin.' : '' }}
             </div>
         </div>
     </div>

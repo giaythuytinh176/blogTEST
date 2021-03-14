@@ -51,21 +51,21 @@
                             </div>
                             @can('page-user-admin')
                                 <div class="form-group">
-                                    <label>Is Published</label>
-                                    <select class="form-control" name="is_published">
-                                        <option value="1">
-                                            YES
+                                    <label>Visibility</label>
+                                    <select class="form-control" name="status">
+                                        <option value="show">
+                                            Show
                                         </option>
-                                        <option value="0">
-                                            NO
+                                        <option value="hide">
+                                            Hide
                                         </option>
                                     </select>
                                     @if($errors->any())
-                                        <div class="alert-danger">{{ $errors->first('is_published') }}</div>
+                                        <div class="alert-danger">{{ $errors->first('status') }}</div>
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>Published at</label>
+                                    <label>Publish</label>
                                     <input type="datetime-local" class="form-control" name="published_at" placeholder="published_at" value="{{ old('published_at') }}">
                                     @if($errors->any())
                                         <div class="alert-danger">{{ $errors->first('published_at') }}</div>

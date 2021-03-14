@@ -37,8 +37,8 @@
                                 <div class="text-center small text-muted mb-4">...or enter your information below.</div>
                                 <!-- Login form-->
                                 <form method="post" action="{{ route('admin.checkRegister') }}">
-                                    @csrf
-                                    <!-- Form Group (email address)-->
+                                @csrf
+                                <!-- Form Group (email address)-->
                                     <div class="form-group">
                                         <label class="text-gray-600 small" for="emailExample">Email address</label>
                                         <input aria-describedby="emailExample" aria-label="Email Address" class="form-control form-control-solid" name="email" placeholder type="text"/>

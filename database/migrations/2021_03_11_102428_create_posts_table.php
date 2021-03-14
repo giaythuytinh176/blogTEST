@@ -19,7 +19,8 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->string('summary');
             $table->longText('content');
-            $table->enum('is_published', [0, 1])->default(0);
+            $table->string('status', 30)->default('show');
+            $table->boolean('is_published')->default(false);
             $table->dateTime('published_at');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
