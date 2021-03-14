@@ -19,6 +19,11 @@ class UserController extends Controller
         return view('backend.user.auth-login-social');
     }
 
+    public function resetPassword()
+    {
+        return view('backend.user.auth-password-social');
+    }
+
     public function showRegister()
     {
         return view('backend.user.auth-register-social');

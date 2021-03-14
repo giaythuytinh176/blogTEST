@@ -249,5 +249,27 @@ class UserTest extends TestCase
         $res2->assertDontSeeText('You are admin');
     }
 
+    public function testUserCreateAPost()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@hotmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $title = uniqid();
+        $data2 = [
+            'title' => $title,
+            'summary' => uniqid(),
+            'content' => uniqid(),
+            '_token' => csrf_token(),
+        ];
+        $res2 = $this->post('/admin/post/create', $data2);
+        $res3 = $this->get('/admin/post/list');
+        $res3->assertSeeText($title);
+    }
+
 
 }
