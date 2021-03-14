@@ -64,7 +64,7 @@ class PostController extends Controller
         if (!$this->userCan('page-user-admin')) {
             $post->published_at = now();
             $post->is_published = 1;
-            $post->status = 'show';
+            $post->status = 'hide';
         } else {
             $post->published_at = $request->published_at;
             if (strtotime($request->published_at) <= time()) {
