@@ -19,7 +19,7 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <div class="post-heading">
                         <h1>{{ $post->title }}</h1>
-                        <h2 class="subheading">{{ substr($post->summary, 0, 33) }} ...</h2>
+                        <h2 class="subheading">{{ \App\Http\Controllers\backend\PostController::substrwords($post->summary, 55) }}</h2>
                         <span class="meta">Posted by
               <a href="#">{{ \App\Models\User::findOrFail($post->user_id)->email }}</a>
               on {{ $post->published_at }}</span>
@@ -85,6 +85,9 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ asset('frontend/js/clean-blog.min.js') }}"></script>
+
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
 
     </body>
 

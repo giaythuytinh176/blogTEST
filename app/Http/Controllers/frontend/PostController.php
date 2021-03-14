@@ -32,6 +32,11 @@ class PostController extends Controller
         return view('frontend.about');
     }
 
+    public function contact()
+    {
+        return view('frontend.contact');
+    }
+
     public function post($id)
     {
         if ($this->userCan('page-user-admin')) {

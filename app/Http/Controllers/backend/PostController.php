@@ -64,13 +64,12 @@ class PostController extends Controller
         if (!$this->userCan('page-user-admin')) {
             $post->published_at = now();
             $post->is_published = 1;
-            $post->status = 'hide';
+            $post->status = 'show';
         } else {
             $post->published_at = $request->published_at;
             if (strtotime($request->published_at) <= time()) {
                 $post->is_published = 1;
-            }
-            else {
+            } else {
                 $post->is_published = 0;
             }
             $post->status = $request->status;
@@ -103,8 +102,7 @@ class PostController extends Controller
             $post->published_at = $request->published_at;
             if (strtotime($request->published_at) <= time()) {
                 $post->is_published = 1;
-            }
-            else {
+            } else {
                 $post->is_published = 0;
             }
         }
@@ -122,6 +120,28 @@ class PostController extends Controller
         $post->delete();
         Toastr::success('Deleted successfully.');
         return redirect()->route('admin.index');
+    }
+
+    public static function substrwords($text, $maxchar, $end = '...')
+    {
+        if (strlen($text) > $maxchar || $text == '') {
+            $words = preg_split('/\s/', $text);
+            $output = '';
+            $i = 0;
+            while (1) {
+                $length = strlen($output) + strlen($words[$i]);
+                if ($length > $maxchar) {
+                    break;
+                } else {
+                    $output .= " " . $words[$i];
+                    ++$i;
+                }
+            }
+            $output .= $end;
+        } else {
+            $output = $text;
+        }
+        return $output;
     }
 
 }

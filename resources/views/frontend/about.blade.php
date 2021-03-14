@@ -1,7 +1,7 @@
 @extends('frontend.master')
 
 @section('title')
-    About
+    About - Blog TEST
 @endsection
 
 @section('content')
@@ -138,6 +138,9 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ asset('frontend/js/clean-blog.min.js') }}"></script>
+
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
 
     </body>
 

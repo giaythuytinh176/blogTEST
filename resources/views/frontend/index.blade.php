@@ -33,24 +33,27 @@
 
                 @forelse($posts as $post)
                     @if(strtotime($post->published_at) > time())
-                            <div class="post-preview">
-                                <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
-                                    <h2 class="post-title">
+                        <div class="post-preview">
+                            <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
+                                <h2 class="post-title">
                                         <span style="background-color:yellow !important;">
                                             {{ strtotime($post->published_at) < time() ? 'Published' : 'Scheduled' }}
                                             | {{ $post->status == 'hide' ? 'Hide' : 'Show' }}
                                             | {{ $post->title }}
                                         </span>
-                                    </h2>
-                                    <h3 class="post-subtitle">
-                                        {{ substr($post->summary, 0, 33) }} ...
-                                    </h3>
-                                </a>
-                                <p class="post-meta">Posted by
-                                    <a href="#">{{ \App\Models\User::findOrFail($post->user_id)->email }}</a>
-                                    on {{ $post->published_at }}</p>
-                            </div>
-                            <hr>
+                                </h2>
+                                <h3 class="post-subtitle">
+                                    {{ \App\Http\Controllers\backend\PostController::substrwords($post->summary, 55) }}
+                                </h3>
+                            </a>
+                            <p class="post-meta">Posted by
+                                <a href="#">{{ \App\Models\User::findOrFail($post->user_id)->email }}</a>
+                                on {{ $post->published_at }}
+                                |
+                                <a href="{{ route('admin.edit', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="Edit {{ $post->title }}">Edit</a>
+                            </p>
+                        </div>
+                        <hr>
                     @else
                         <div class="post-preview">
                             <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
@@ -62,12 +65,17 @@
                                     {{ $post->title }}
                                 </h2>
                                 <h3 class="post-subtitle">
-                                    {{ substr($post->summary, 0, 33) }} ...
+                                    {{ \App\Http\Controllers\backend\PostController::substrwords($post->summary, 55) }}
                                 </h3>
                             </a>
                             <p class="post-meta">Posted by
                                 <a href="#">{{ \App\Models\User::findOrFail($post->user_id)->email }}</a>
-                                on {{ $post->published_at }}</p>
+                                on {{ $post->published_at }}
+                                @can('page-user-admin')
+                                    |
+                                    <a href="{{ route('admin.edit', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="Edit {{ $post->title }}">Edit</a>
+                                @endcan
+                            </p>
                         </div>
                         <hr>
                     @endif
@@ -129,6 +137,9 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ asset('frontend/js/clean-blog.min.js') }}"></script>
+
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
 
     </body>
 

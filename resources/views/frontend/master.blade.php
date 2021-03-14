@@ -22,6 +22,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('frontend/css/clean-blog.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 
 </head>
 
