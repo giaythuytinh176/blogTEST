@@ -77,6 +77,20 @@ class UserTest extends TestCase
         $res2->assertSeeText('Email is required');
     }
 
+    public function testLoginAccountOrPasswordNotFound()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@live.com',
+            'password' => '123456',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/admin/login');
+        $res2->assertSeeText('Email or password is incorrect');
+    }
+
     public function testRegisterPasswordNull()
     {
         Session::start();
@@ -119,6 +133,120 @@ class UserTest extends TestCase
         $res->assertStatus(302);
         $res2 = $this->get('/admin/logout');
         $res2->assertSessionHas('toastr::messages');
+    }
+
+    public function testInvalidAccessUser()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@hotmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/p/23/them-1-ca-mac-covid-19-viet-nam-ghi-nhan-2554-ca-benh');
+        $res2->assertSeeText('Not Found');
+    }
+
+    public function testLoginWithAdminSite()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@gmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/admin');
+        $res2->assertSeeText('You are admin');
+    }
+
+    public function testUserCannotAdmin()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@hotmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/admin');
+        $res2->assertDontSeeText('You are admin');
+    }
+
+    public function testOnlyAdminSeeHighlightPost()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@gmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/');
+        $res2->assertSeeText('Scheduled');
+    }
+
+    public function testUserCannotSeeHighlightPost()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@hotmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/');
+        $res2->assertDontSeeText('Scheduled');
+    }
+
+    public function testUserCannotSeeHidePost()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@hotmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/');
+        $res2->assertDontSeeText('Hide');
+    }
+
+    public function testAdminCanSeeHidePost()
+    {
+        Session::start();
+        $data = [
+            'email' => 'giaythuytinh176@gmail.com',
+            'password' => '0979029556',
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/login', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/');
+        $res2->assertSeeText('Hide');
+    }
+
+    public function testUserCannotRegisterAsAAdmin()
+    {
+        Session::start();
+        $data = [
+            'email' => uniqid() . '@gmail.com',
+            'password' => '0979029556',
+            'password_confirmation' => '0979029556',
+            'role' => '1', // use fake form to register as a admin
+            '_token' => csrf_token(),
+        ];
+        $res = $this->post('/admin/register', $data);
+        $res->assertStatus(302);
+        $res2 = $this->get('/admin');
+        $res2->assertDontSeeText('You are admin');
     }
 
 
