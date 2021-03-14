@@ -39,6 +39,7 @@ class PostController extends Controller
             $post = Post::where('id', $id)
                 ->where('status', 'show')
                 ->where('is_published', true)
+                ->where('published_at', '<=', now())
                 ->firstOrFail();
         }
         return view('frontend.post', compact('post'));

@@ -47,7 +47,7 @@ class PostController extends Controller
                 ->orderByDesc('id')
                 ->paginate(10);
         }
-        return view('backend.post.main', compact('posts'));
+        return view('backend.post.index', compact('posts'));
     }
 
     public function create()
@@ -73,7 +73,7 @@ class PostController extends Controller
         return redirect()->route('admin.index');
     }
 
-    public function edit(Post $post, Request $request, $id)
+    public function edit($id)
     {
         $post = Post::findOrFail($id);
         if ($this->userCan('access-others-post', $post) === false) {
@@ -82,7 +82,7 @@ class PostController extends Controller
         return view('backend.post.edit', compact('post'));
     }
 
-    public function update(EditRequest $request, Post $post)
+    public function update(EditRequest $request)
     {
         $post = Post::findOrFail($request->id);
         if ($this->userCan('access-others-post', $post) === false) {

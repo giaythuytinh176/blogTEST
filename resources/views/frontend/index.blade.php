@@ -33,28 +33,26 @@
 
                 @forelse($posts as $post)
                     @if(strtotime($post->published_at) > time())
-
-                        <div class="post-preview">
-
-                            <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
-                                <h2 class="post-title">
+                        @can('page-user-admin')
+                            <div class="post-preview">
+                                <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
+                                    <h2 class="post-title">
                                         <span style="background-color:yellow !important;">
-                                        @can('page-user-admin')
-                                                {{ $post->published_at < now() ? 'Published' : 'Scheduled' }}
-                                                | {{ $post->status == 'hide' ? 'Hide' : 'Show' }} |
-                                            @endcan
-                                            {{ $post->title }}
+                                            {{ $post->published_at < now() ? 'Published' : 'Scheduled' }}
+                                            | {{ $post->status == 'hide' ? 'Hide' : 'Show' }}
+                                            | {{ $post->title }}
                                         </span>
-                                </h2>
-                                <h3 class="post-subtitle">
-                                    {{ substr($post->summary, 0, 33) }} ...
-                                </h3>
-                            </a>
-                            <p class="post-meta">Posted by
-                                <a href="#">{{ \App\Models\User::findOrFail($post->user_id)->email }}</a>
-                                on {{ $post->published_at }}</p>
-                        </div>
-                        <hr>
+                                    </h2>
+                                    <h3 class="post-subtitle">
+                                        {{ substr($post->summary, 0, 33) }} ...
+                                    </h3>
+                                </a>
+                                <p class="post-meta">Posted by
+                                    <a href="#">{{ \App\Models\User::findOrFail($post->user_id)->email }}</a>
+                                    on {{ $post->published_at }}</p>
+                            </div>
+                            <hr>
+                        @endcan
                     @else
                         <div class="post-preview">
                             <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">

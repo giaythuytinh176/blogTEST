@@ -68,7 +68,7 @@
                                             <span class="view"><a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="View {{ $post->title }}" target="_blank">View</a></span>
                                         </div>
                                     </td>
-                                    <td>{{ substr($post->summary, 0, 33) }}...</td>
+                                    <td>{{ substr($post->summary, 0, 33) }} ...</td>
                                     <td>
                                         {{ \App\Models\User::findOrFail($post->user_id)->email }}
                                     </td>
