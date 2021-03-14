@@ -146,7 +146,7 @@
                         </a>
                     </li>
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
+                <p class="copyright text-muted">Copyright &copy; CodeGym 2021</p>
             </div>
         </div>
     </div>
