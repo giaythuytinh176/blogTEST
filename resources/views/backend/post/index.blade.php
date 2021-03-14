@@ -64,8 +64,10 @@
                                             <span class="trash">
                                                 <a href="{{ route('admin.destroy', $post->id) }}" class="submitdelete" onclick="return confirm('Do you want to delete it?')" aria-label="Move {{ $post->title }} to the Trash">Trash</a>
                                             </span>
-                                            |
-                                            <span class="view"><a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="View {{ $post->title }}" target="_blank">View</a></span>
+                                            @if(($post->is_published == 1 && $post->status == 'show') || (\Illuminate\Support\Facades\Auth::user()->role == 1))
+                                                |
+                                                <span class="view"><a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="View {{ $post->title }}" target="_blank">View</a></span>
+                                            @endif
                                         </div>
                                     </td>
                                     <td>{{ substr($post->summary, 0, 33) }} ...</td>
