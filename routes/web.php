@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'frontend\PostController@index')->name('index');
 Route::get('/about', 'frontend\PostController@about')->name('about');
+Route::get('/contact', 'frontend\PostController@contact')->name('contact');
 Route::get('/p/{id}/{slug}', 'frontend\PostController@post')->name('post');
 
 Route::prefix('admin')->group(function () {

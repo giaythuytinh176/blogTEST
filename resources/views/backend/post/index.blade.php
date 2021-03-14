@@ -70,7 +70,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td>{{ substr($post->summary, 0, 33) }} ...</td>
+                                    <td>{{ \App\Http\Controllers\backend\PostController::substrwords($post->summary, 55) }}</td>
                                     <td>
                                         {{ \App\Models\User::findOrFail($post->user_id)->email }}
                                     </td>
