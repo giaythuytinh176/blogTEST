@@ -51,6 +51,8 @@
                                 on {{ $post->published_at }}
                                 |
                                 <a href="{{ route('admin.edit', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="Edit {{ $post->title }}">Edit</a>
+                                |
+                                <a href="{{ route('admin.destroy', $post->id) }}" class="submitdelete" onclick="return confirm('Do you want to delete it?')" aria-label="Move {{ $post->title }} to the Trash">Trash</a>
                             </p>
                         </div>
                         <hr>
@@ -74,6 +76,8 @@
                                 @can('page-user-admin')
                                     |
                                     <a href="{{ route('admin.edit', ['id'=>$post->id, 'slug'=>$post->slug])  }}" aria-label="Edit {{ $post->title }}">Edit</a>
+                                    |
+                                    <a href="{{ route('admin.destroy', $post->id) }}" class="submitdelete" onclick="return confirm('Do you want to delete it?')" aria-label="Move {{ $post->title }} to the Trash">Trash</a>
                                 @endcan
                             </p>
                         </div>

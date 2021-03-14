@@ -14,16 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'frontend\PostController@index')->name('index');
-Route::get('/about', 'frontend\PostController@about')->name('about');
-Route::get('/contact', 'frontend\PostController@contact')->name('contact');
-Route::get('/p/{id}/{slug}', 'frontend\PostController@post')->name('post');
+Route::get('about', 'frontend\PostController@about')->name('about');
+Route::get('contact', 'frontend\PostController@contact')->name('contact');
+Route::get('p/{id}/{slug}', 'frontend\PostController@post')->name('post');
+
+Route::prefix('reset-password')->group(function () {
+    Route::get('/', 'backend\UserController@resetPassword')->name('admin.resetpassword');
+    Route::post('/', 'ResetPasswordController@sendMail')->name('password.sendMail');
+    Route::get('{token}', 'ResetPasswordController@resetForm')->name('password.showForm');
+    Route::post('{token}', 'ResetPasswordController@reset')->name('password.reset');
+});
 
 Route::prefix('admin')->group(function () {
-    Route::get('/login', 'backend\UserController@showLogin')->name('admin.showLogin');
-    Route::post('/login', 'backend\UserController@checkLogin')->name('admin.checkLogin');
-    Route::get('/register', 'backend\UserController@showRegister')->name('admin.showRegister');
-    Route::post('/register', 'backend\UserController@checkRegister')->name('admin.checkRegister');
-    Route::get('/logout', 'backend\UserController@logout')->name('admin.logout');
+    Route::get('login', 'backend\UserController@showLogin')->name('admin.showLogin');
+    Route::post('login', 'backend\UserController@checkLogin')->name('admin.checkLogin');
+    Route::get('register', 'backend\UserController@showRegister')->name('admin.showRegister');
+    Route::post('register', 'backend\UserController@checkRegister')->name('admin.checkRegister');
+    Route::get('logout', 'backend\UserController@logout')->name('admin.logout');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'checkLogin'], function () {

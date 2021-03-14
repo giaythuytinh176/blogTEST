@@ -69,7 +69,7 @@
                                         @endif
                                     </div>
                                     <!-- Form Group (forgot password link)-->
-                                    <div class="form-group"><a class="small" href="auth-password-social.html">Forgot
+                                    <div class="form-group"><a class="small" href="{{ route('admin.resetpassword') }}">Forgot
                                             your password?</a></div>
                                     <!-- Form Group (login box)-->
                                     <div class="form-group d-flex align-items-center justify-content-between mb-0">

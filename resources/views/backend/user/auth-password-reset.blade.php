@@ -24,7 +24,7 @@
                         <!-- Social forgot password form-->
                         <div class="card my-5">
                             <div class="card-body p-5 text-center">
-                                <div class="h3 font-weight-light mb-0">Password Recovery</div>
+                                <div class="h3 font-weight-light mb-0">Change Password</div>
                             </div>
                             <hr class="my-0"/>
                             <div class="card-body p-5">
@@ -39,28 +39,40 @@
                                             {{ $success }}
                                         </div>
                                     @endisset
-                                    Enter your email address below and we
-                                    will send you a link to reset your password.
                                 </div>
-                                <!-- Forgot password form-->
-                                <form method="post" action="{{ route('password.sendMail') }}">
-                                @csrf
-                                <!-- Form Group (email address)-->
-                                    <div class="form-group">
-                                        <label class="text-gray-600 small" for="emailExample">Email address</label>
-                                        <input aria-describedby="emailExample" aria-label="Email Address" class="form-control form-control-solid" name="email" placeholder type="email"/>
-                                    </div>
-                                    <!-- Form Group (reset password button)    -->
-                                    <div class="form-group mb-0 text-center">
-                                        <button type="submit" class="btn btn-primary">Reset Password</button>
-                                    </div>
-                                </form>
+                                @empty($message)
+                                    <form method="post" action="{{ route('password.reset', $token ?? '') }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="newPassword">New Password</label>
+                                            <input class="form-control" id="newPassword" placeholder="Enter new password" name="password" type="password"/>
+                                            @if($errors->any() && $errors->first('password'))
+                                                <div>
+                                                    <p class="alert-danger">{{ $errors->first('password') }}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <!-- Form Group (confirm password)-->
+                                        <div class="form-group">
+                                            <label class="small mb-1" for="confirmPassword">Confirm Password</label>
+                                            <input class="form-control" id="confirmPassword" placeholder="Confirm new password" name="password_confirmation" type="password"/>
+                                            @if($errors->any() && $errors->first('password_confirmation'))
+                                                <div>
+                                                    <p class="alert-danger">{{ $errors->first('password_confirmation') }}</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="form-group mb-0 text-center">
+                                            <button type="submit" class="btn btn-primary">Reset Password</button>
+                                        </div>
+                                    </form>
+                                @endempty
                             </div>
                             <hr class="my-0"/>
                             <div class="card-body px-5 py-4">
                                 <div class="small text-center">
-                                    New user?
-                                    <a href="{{ route('admin.showRegister') }}">Create an account!</a>
+                                    Have an account?
+                                    <a href="{{ route('admin.showLogin') }}">Sign in!</a>
                                 </div>
                             </div>
                         </div>
