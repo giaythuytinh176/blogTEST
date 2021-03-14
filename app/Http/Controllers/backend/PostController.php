@@ -18,20 +18,20 @@ class PostController extends Controller
     {
         $posts = DB::table('posts')
             ->where('published_at', '<=', now())
-            ->where('is_published', false)
+            ->where('is_published', 0)
             ->orderByDesc('published_at')
             ->get();
         $posts->each(function ($post) {
-            DB::table('posts')->where('id', $post->id)->update(['is_published' => true]);
+            DB::table('posts')->where('id', $post->id)->update(['is_published' => 1]);
         });
 
         $posts2 = DB::table('posts')
             ->where('published_at', '>', now())
-            ->where('is_published', true)
+            ->where('is_published', 1)
             ->orderByDesc('published_at')
             ->get();
         $posts2->each(function ($post2) {
-            DB::table('posts')->where('id', $post2->id)->update(['is_published' => false]);
+            DB::table('posts')->where('id', $post2->id)->update(['is_published' => 0]);
         });
     }
 
@@ -63,9 +63,16 @@ class PostController extends Controller
         $post->user_id = Auth::user()->id;
         if (!$this->userCan('page-user-admin')) {
             $post->published_at = now();
+            $post->is_published = 1;
             $post->status = 'hide';
         } else {
             $post->published_at = $request->published_at;
+            if (strtotime($request->published_at) <= time()) {
+                $post->is_published = 1;
+            }
+            else {
+                $post->is_published = 0;
+            }
             $post->status = $request->status;
         }
         $post->save();
@@ -94,6 +101,12 @@ class PostController extends Controller
         if ($this->userCan('page-user-admin')) {
             $post->status = $request->status;
             $post->published_at = $request->published_at;
+            if (strtotime($request->published_at) <= time()) {
+                $post->is_published = 1;
+            }
+            else {
+                $post->is_published = 0;
+            }
         }
         $post->save();
         Toastr::success('Post Updated.');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\backend\UserController;
+use App\Http\Controllers\frontend\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,26 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'frontend\PostController@index')->name('index');
-Route::get('/about', 'frontend\PostController@about')->name('about');
-Route::get('/p/{id}/{slug}', 'frontend\PostController@post')->name('post');
+Route::get('/', [PostController::class, 'index'])->name('index');
+Route::get('/about', [PostController::class, 'about'])->name('about');
+Route::get('/p/{id}/{slug}', [PostController::class, 'post'])->name('post');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/login', 'backend\UserController@showLogin')->name('admin.showLogin');
-    Route::post('/login', 'backend\UserController@checkLogin')->name('admin.checkLogin');
-    Route::get('/register', 'backend\UserController@showRegister')->name('admin.showRegister');
-    Route::post('/register', 'backend\UserController@checkRegister')->name('admin.checkRegister');
-    Route::get('/logout', 'backend\UserController@logout')->name('admin.logout');
+    Route::get('/login', [UserController::class, 'showLogin'])->name('admin.showLogin');
+    Route::post('/login', [UserController::class, 'checkLogin'])->name('admin.checkLogin');
+    Route::get('/register', [UserController::class, 'showRegister'])->name('admin.showRegister');
+    Route::post('/register', [UserController::class, 'logout'])->name('admin.logout');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'checkLogin'], function () {
-    Route::get('/', 'backend\PostController@index')->name('admin.index1');
+    Route::get('/', [\App\Http\Controllers\backend\PostController::class, 'index'])->name('admin.index1');
     Route::group(['prefix' => 'post'], function () {
-        Route::get('list', 'backend\PostController@index')->name('admin.index');
-        Route::get('create', 'backend\PostController@create')->name('admin.create');
-        Route::post('create', 'backend\PostController@store')->name('admin.store');
-        Route::get('delete/{id}', 'backend\PostController@destroy')->name('admin.destroy');
-        Route::get('edit/{id}/{slug}', 'backend\PostController@edit')->name('admin.edit');
-        Route::post('edit/{id}/{slug}', 'backend\PostController@update')->name('admin.update');
+        Route::get('list', [\App\Http\Controllers\backend\PostController::class, 'index'])->name('admin.index');
+        Route::get('create', [\App\Http\Controllers\backend\PostController::class, 'create'])->name('admin.create');
+        Route::post('create', [\App\Http\Controllers\backend\PostController::class, 'store'])->name('admin.store');
+        Route::get('delete/{id}', [\App\Http\Controllers\backend\PostController::class, 'destroy'])->name('admin.destroy');
+        Route::get('edit/{id}/{slug}', [\App\Http\Controllers\backend\PostController::class, 'edit'])->name('admin.edit');
+        Route::post('edit/{id}/{slug}', [\App\Http\Controllers\backend\PostController::class, 'update'])->name('admin.update');
     });
 });

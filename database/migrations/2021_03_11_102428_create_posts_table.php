@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('summary');
             $table->longText('content');
             $table->string('status', 30)->default('show');
-            $table->boolean('is_published')->default(true);
+            $table->boolean('is_published')->default(false);
             $table->dateTime('published_at');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

@@ -33,12 +33,11 @@
 
                 @forelse($posts as $post)
                     @if(strtotime($post->published_at) > time())
-                        @can('page-user-admin')
                             <div class="post-preview">
                                 <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
                                     <h2 class="post-title">
                                         <span style="background-color:yellow !important;">
-                                            {{ $post->published_at < now() ? 'Published' : 'Scheduled' }}
+                                            {{ strtotime($post->published_at) < time() ? 'Published' : 'Scheduled' }}
                                             | {{ $post->status == 'hide' ? 'Hide' : 'Show' }}
                                             | {{ $post->title }}
                                         </span>
@@ -52,13 +51,12 @@
                                     on {{ $post->published_at }}</p>
                             </div>
                             <hr>
-                        @endcan
                     @else
                         <div class="post-preview">
                             <a href="{{ route('post', ['id'=>$post->id, 'slug'=>$post->slug]) }}">
                                 <h2 class="post-title">
                                     @can('page-user-admin')
-                                        {{ $post->published_at < now() ? 'Published' : 'Scheduled' }}
+                                        {{ strtotime($post->published_at) < time() ? 'Published' : 'Scheduled' }}
                                         | {{ $post->status == 'hide' ? 'Hide' : 'Show' }} |
                                     @endcan
                                     {{ $post->title }}

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\backend\PostController;
 use Illuminate\Console\Command;
 
 class schedulePost extends Command

@@ -19,7 +19,8 @@ class PostController extends Controller
         } else {
             $posts = DB::table('posts')
                 ->where('status', 'show')
-                ->where('is_published', true)
+                ->where('is_published', 1)
+                ->where('published_at', '<=', now())
                 ->orderByDesc('id')
                 ->paginate(10);
         }
@@ -38,7 +39,7 @@ class PostController extends Controller
         } else {
             $post = Post::where('id', $id)
                 ->where('status', 'show')
-                ->where('is_published', true)
+                ->where('is_published', 1)
                 ->where('published_at', '<=', now())
                 ->firstOrFail();
         }
